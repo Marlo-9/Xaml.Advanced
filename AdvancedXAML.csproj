@@ -51,12 +51,19 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="TextBoxAD.xaml">
+    <Page Include="PasswordField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TextField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="TextBoxAD.xaml.cs">
-      <DependentUpon>TextBoxAD.xaml</DependentUpon>
+    <Compile Include="PasswordField.xaml.cs">
+      <DependentUpon>PasswordField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TextField.xaml.cs">
+      <DependentUpon>TextField.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -78,7 +85,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

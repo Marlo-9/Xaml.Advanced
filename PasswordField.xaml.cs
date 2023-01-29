@@ -17,13 +17,16 @@ using System.Windows.Shapes;
 
 namespace AdvancedXAML
 {
-    public partial class TextField : UserControl, INotifyPropertyChanged
+    /// <summary>
+    /// Логика взаимодействия для PasswordField.xaml
+    /// </summary>
+    public partial class PasswordField : UserControl, INotifyPropertyChanged
     {
-        public TextField()
+        public PasswordField()
         {
             InitializeComponent();
 
-            PlaceHolderVisibility = Text == "" ? Visibility.Visible : Visibility.Collapsed;
+            Password = MainPasswordBox.Password;
         }
 
         private Visibility _placeHolderVisibility;
@@ -38,22 +41,22 @@ namespace AdvancedXAML
             }
         }
 
-        #region Text 
+        #region Password 
 
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text),
-                                                                                             typeof(string),
-                                                                                             typeof(TextField),
-                                                                                             new FrameworkPropertyMetadata(
-                                                                                                defaultValue: "",
-                                                                                                flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
-                                                                                                propertyChangedCallback: new PropertyChangedCallback(OnTextChanged)));
+        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register(nameof(Password),
+                                                                                                 typeof(string),
+                                                                                                 typeof(PasswordField),
+                                                                                                 new FrameworkPropertyMetadata(
+                                                                                                    defaultValue: "",
+                                                                                                    flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                                                    propertyChangedCallback: new PropertyChangedCallback(OnPasswordChanged)));
 
-        public string Text
+        public string Password
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get => (string)GetValue(PasswordProperty);
+            set => SetValue(PasswordProperty, value);
         }
-        private static void OnTextChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnPasswordChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
 
         }
@@ -62,13 +65,13 @@ namespace AdvancedXAML
 
         #region PlaceHolder 
 
-        public static DependencyProperty PlaceHolderProperty = DependencyProperty.Register(nameof(PlaceHolder),
-                                                                                           typeof(string),
-                                                                                           typeof(TextField),
-                                                                                           new FrameworkPropertyMetadata(
-                                                                                              defaultValue: "",
-                                                                                              flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
-                                                                                              propertyChangedCallback: new PropertyChangedCallback(OnPlaceHolderChanged)));
+        public static readonly DependencyProperty PlaceHolderProperty = DependencyProperty.Register(nameof(PlaceHolder),
+                                                                                                    typeof(string),
+                                                                                                    typeof(PasswordField),
+                                                                                                    new FrameworkPropertyMetadata(
+                                                                                                       defaultValue: "",
+                                                                                                       flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                                                       propertyChangedCallback: new PropertyChangedCallback(OnPlaceHolderChanged)));
 
         public string PlaceHolder
         {
@@ -86,7 +89,7 @@ namespace AdvancedXAML
 
         public static readonly DependencyProperty PlaceHolderOpacityProperty = DependencyProperty.Register(nameof(PlaceHolderOpacity),
                                                                                                                typeof(double),
-                                                                                                               typeof(TextField),
+                                                                                                               typeof(PasswordField),
                                                                                                                new FrameworkPropertyMetadata(
                                                                                                                   defaultValue: 0.4,
                                                                                                                   flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -108,7 +111,7 @@ namespace AdvancedXAML
 
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(nameof(CornerRadius),
                                                                                                      typeof(CornerRadius),
-                                                                                                     typeof(TextField),
+                                                                                                     typeof(PasswordField),
                                                                                                      new FrameworkPropertyMetadata(
                                                                                                         defaultValue: new CornerRadius(20),
                                                                                                         flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -130,7 +133,7 @@ namespace AdvancedXAML
 
         public static new readonly DependencyProperty BorderThicknessProperty = DependencyProperty.Register(nameof(BorderThickness),
                                                                                                             typeof(Thickness),
-                                                                                                            typeof(TextField),
+                                                                                                            typeof(PasswordField),
                                                                                                             new FrameworkPropertyMetadata(
                                                                                                                defaultValue: new Thickness(4),
                                                                                                                flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -152,9 +155,9 @@ namespace AdvancedXAML
 
         public static new readonly DependencyProperty PaddingProperty = DependencyProperty.Register(nameof(Padding),
                                                                                                     typeof(Thickness),
-                                                                                                    typeof(TextField),
+                                                                                                    typeof(PasswordField),
                                                                                                     new FrameworkPropertyMetadata(
-                                                                                                       defaultValue: new Thickness(2),
+                                                                                                       defaultValue: new Thickness(0),
                                                                                                        flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
                                                                                                        propertyChangedCallback: new PropertyChangedCallback(OnPaddingChanged)));
 
@@ -174,7 +177,7 @@ namespace AdvancedXAML
 
         public static new readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(nameof(Background),
                                                                                                        typeof(SolidColorBrush),
-                                                                                                       typeof(TextField),
+                                                                                                       typeof(PasswordField),
                                                                                                        new FrameworkPropertyMetadata(
                                                                                                           defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
                                                                                                           flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -196,7 +199,7 @@ namespace AdvancedXAML
 
         public static new readonly DependencyProperty BorderBrushProperty = DependencyProperty.Register(nameof(BorderBrush),
                                                                                                         typeof(SolidColorBrush),
-                                                                                                        typeof(TextField),
+                                                                                                        typeof(PasswordField),
                                                                                                         new FrameworkPropertyMetadata(
                                                                                                            defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
                                                                                                            flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -218,7 +221,7 @@ namespace AdvancedXAML
 
         public static new readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(nameof(Foreground),
                                                                                                        typeof(SolidColorBrush),
-                                                                                                       typeof(TextField),
+                                                                                                       typeof(PasswordField),
                                                                                                        new FrameworkPropertyMetadata(
                                                                                                           defaultValue: new SolidColorBrush(Color.FromArgb(255, 235, 235, 235)),
                                                                                                           flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -239,12 +242,12 @@ namespace AdvancedXAML
         #region CaretBrush
 
         public static readonly DependencyProperty CaretBrushProperty = DependencyProperty.Register(nameof(CaretBrush),
-                                                                                                       typeof(SolidColorBrush),
-                                                                                                       typeof(TextField),
-                                                                                                       new FrameworkPropertyMetadata(
-                                                                                                          defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
-                                                                                                          flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
-                                                                                                          propertyChangedCallback: new PropertyChangedCallback(OnCaretBrushChanged)));
+                                                                                                   typeof(SolidColorBrush),
+                                                                                                   typeof(PasswordField),
+                                                                                                   new FrameworkPropertyMetadata(
+                                                                                                      defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
+                                                                                                      flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                                                      propertyChangedCallback: new PropertyChangedCallback(OnCaretBrushChanged)));
 
         public SolidColorBrush CaretBrush
         {
@@ -262,7 +265,7 @@ namespace AdvancedXAML
 
         public static readonly DependencyProperty SelectionBrushProperty = DependencyProperty.Register(nameof(SelectionBrush),
                                                                                                        typeof(SolidColorBrush),
-                                                                                                       typeof(TextField),
+                                                                                                       typeof(PasswordField),
                                                                                                        new FrameworkPropertyMetadata(
                                                                                                           defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
                                                                                                           flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -287,22 +290,24 @@ namespace AdvancedXAML
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        private void TextChange(object sender, TextChangedEventArgs e)
+        private void PasswordChange(object sender, RoutedEventArgs e)
         {
-            if (((TextBox)sender).IsFocused)
+            Password = ((PasswordBox)sender).Password;
+
+            if (((PasswordBox)sender).IsFocused)
                 PlaceHolderVisibility = Visibility.Collapsed;
             else
-                PlaceHolderVisibility = Text == "" ? Visibility.Visible : Visibility.Collapsed;
+                PlaceHolderVisibility = Password == "" ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void TextBoxGotFocus(object sender, RoutedEventArgs e)
+        private void PasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
             PlaceHolderVisibility = Visibility.Collapsed;
         }
 
-        private void TextBoxLostFocus(object sender, RoutedEventArgs e)
+        private void PasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            PlaceHolderVisibility = Text == "" ? Visibility.Visible : Visibility.Collapsed;
+            PlaceHolderVisibility = Password == "" ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
