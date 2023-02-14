@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AdvancedXAML
+namespace Xaml.Advanced
 {
     /// <summary>
     /// Логика взаимодействия для PasswordField.xaml
@@ -26,7 +26,7 @@ namespace AdvancedXAML
         {
             InitializeComponent();
 
-            Password = MainPasswordBox.Password;
+            //Password = MainPasswordBox.Password;
         }
 
         private Visibility _placeHolderVisibility;
@@ -38,6 +38,42 @@ namespace AdvancedXAML
             {
                 _placeHolderVisibility = value;
                 OnPropertyChanged(nameof(PlaceHolderVisibility));
+            }
+        }
+
+        private Visibility _focuseVisibility = Visibility.Collapsed;
+
+        public Visibility FocuseVisibility
+        {
+            get => _focuseVisibility;
+            set
+            {
+                _focuseVisibility = value;
+                OnPropertyChanged(nameof(FocuseVisibility));
+            }
+        }
+
+        private static CornerRadius _buttonCornerRadius;
+
+        public CornerRadius ButtonCornerRadius
+        {
+            get => _buttonCornerRadius;
+            set
+            {
+                _buttonCornerRadius = value;
+                OnPropertyChanged(nameof(ButtonCornerRadius));
+            }
+        }
+
+        private double _columnWidth;
+
+        public double ColumnWidth
+        {
+            get => _columnWidth;
+            set
+            {
+                _columnWidth = value;
+                OnPropertyChanged(nameof(ColumnWidth));
             }
         }
 
@@ -113,7 +149,7 @@ namespace AdvancedXAML
                                                                                                      typeof(CornerRadius),
                                                                                                      typeof(PasswordField),
                                                                                                      new FrameworkPropertyMetadata(
-                                                                                                        defaultValue: new CornerRadius(20),
+                                                                                                        defaultValue: new CornerRadius(0),
                                                                                                         flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
                                                                                                         propertyChangedCallback: new PropertyChangedCallback(OnCornerRadiusChanged)));
 
@@ -124,7 +160,10 @@ namespace AdvancedXAML
         }
         private static void OnCornerRadiusChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
+            PasswordField passwordField = (PasswordField)dependencyObject;
 
+            passwordField.ButtonCornerRadius = new CornerRadius(0, passwordField.CornerRadius.TopRight - (passwordField.BorderThickness.Right / 1.8),
+                                                  passwordField.CornerRadius.BottomRight - (passwordField.BorderThickness.Right / 1.8), 0);
         }
 
         #endregion
@@ -135,7 +174,7 @@ namespace AdvancedXAML
                                                                                                             typeof(Thickness),
                                                                                                             typeof(PasswordField),
                                                                                                             new FrameworkPropertyMetadata(
-                                                                                                               defaultValue: new Thickness(4),
+                                                                                                               defaultValue: new Thickness(3),
                                                                                                                flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
                                                                                                                propertyChangedCallback: new PropertyChangedCallback(OnBorderThicknessChanged)));
 
@@ -217,6 +256,28 @@ namespace AdvancedXAML
 
         #endregion
 
+        #region BorderBrushFocused
+
+        public static readonly DependencyProperty BorderBrushFocusedProperty = DependencyProperty.Register(nameof(BorderBrushFocused),
+                                                                                                           typeof(SolidColorBrush),
+                                                                                                           typeof(PasswordField),
+                                                                                                           new FrameworkPropertyMetadata(
+                                                                                                              defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
+                                                                                                              flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                                                              propertyChangedCallback: new PropertyChangedCallback(OnBorderBrushFocusedChanged)));
+
+        public SolidColorBrush BorderBrushFocused
+        {
+            get => (SolidColorBrush)GetValue(BorderBrushFocusedProperty);
+            set => SetValue(BorderBrushFocusedProperty, value);
+        }
+        private static void OnBorderBrushFocusedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
         #region Foreground
 
         public static new readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(nameof(Foreground),
@@ -245,7 +306,7 @@ namespace AdvancedXAML
                                                                                                    typeof(SolidColorBrush),
                                                                                                    typeof(PasswordField),
                                                                                                    new FrameworkPropertyMetadata(
-                                                                                                      defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
+                                                                                                      defaultValue: new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
                                                                                                       flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
                                                                                                       propertyChangedCallback: new PropertyChangedCallback(OnCaretBrushChanged)));
 
@@ -283,6 +344,30 @@ namespace AdvancedXAML
 
         #endregion
 
+        #region IsButtonEnable
+
+        public static readonly DependencyProperty IsButtonEnableProperty = DependencyProperty.Register(nameof(IsButtonEnable),
+                                                                                                       typeof(bool),
+                                                                                                       typeof(PasswordField),
+                                                                                                       new FrameworkPropertyMetadata(
+                                                                                                          defaultValue: false,
+                                                                                                          flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                                                          propertyChangedCallback: new PropertyChangedCallback(OnIsButtonEnableChanged)));
+
+        public bool IsButtonEnable
+        {
+            get => (bool)GetValue(IsButtonEnableProperty);
+            set => SetValue(IsButtonEnableProperty, value);
+        }
+        private static void OnIsButtonEnableChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            PasswordField passwordField = (PasswordField)dependencyObject;
+
+            passwordField.ColumnWidth = !(bool)e.NewValue ? 0 : passwordField.This.Height;
+        }
+
+        #endregion
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
@@ -294,19 +379,41 @@ namespace AdvancedXAML
         {
             Password = ((PasswordBox)sender).Password;
 
-            if (((PasswordBox)sender).IsFocused)
-                PlaceHolderVisibility = Visibility.Collapsed;
-            else
-                PlaceHolderVisibility = Password == "" ? Visibility.Visible : Visibility.Collapsed;
+            PlaceHolderVisibility = Password == "" ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void PasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            PlaceHolderVisibility = Visibility.Collapsed;
+            FocuseVisibility = Visibility.Visible;
         }
 
         private void PasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
+            FocuseVisibility = Visibility.Collapsed;
+
+            PlaceHolderVisibility = Password == "" ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void TextBoxEnableChange(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            MainPasswordBox.IsEnabled = !((TextBox)sender).IsEnabled;
+            MainPasswordBox.Password = Password;
+        }
+
+        private void TextBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            FocuseVisibility = Visibility.Visible;
+        }
+
+        private void TextBoxPasswordChange(object sender, TextChangedEventArgs e)
+        {
+            PlaceHolderVisibility = Password == "" ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void TextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            FocuseVisibility = Visibility.Collapsed;
+
             PlaceHolderVisibility = Password == "" ? Visibility.Visible : Visibility.Collapsed;
         }
     }

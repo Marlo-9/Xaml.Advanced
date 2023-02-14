@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AdvancedXAML
+namespace Xaml.Advanced
 {
     public partial class TextField : UserControl, INotifyPropertyChanged
     {
@@ -35,6 +35,18 @@ namespace AdvancedXAML
             {
                 _placeHolderVisibility = value;
                 OnPropertyChanged(nameof(PlaceHolderVisibility));
+            }
+        }
+
+        private Visibility _focuseVisibility = Visibility.Collapsed;
+
+        public Visibility FocuseVisibility
+        {
+            get => _focuseVisibility;
+            set
+            {
+                _focuseVisibility = value;
+                OnPropertyChanged(nameof(FocuseVisibility));
             }
         }
 
@@ -110,7 +122,7 @@ namespace AdvancedXAML
                                                                                                      typeof(CornerRadius),
                                                                                                      typeof(TextField),
                                                                                                      new FrameworkPropertyMetadata(
-                                                                                                        defaultValue: new CornerRadius(20),
+                                                                                                        defaultValue: new CornerRadius(0),
                                                                                                         flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
                                                                                                         propertyChangedCallback: new PropertyChangedCallback(OnCornerRadiusChanged)));
 
@@ -132,7 +144,7 @@ namespace AdvancedXAML
                                                                                                             typeof(Thickness),
                                                                                                             typeof(TextField),
                                                                                                             new FrameworkPropertyMetadata(
-                                                                                                               defaultValue: new Thickness(4),
+                                                                                                               defaultValue: new Thickness(3),
                                                                                                                flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
                                                                                                                propertyChangedCallback: new PropertyChangedCallback(OnBorderThicknessChanged)));
 
@@ -214,6 +226,28 @@ namespace AdvancedXAML
 
         #endregion
 
+        #region BorderBrushFocused
+
+        public static readonly DependencyProperty BorderBrushFocusedProperty = DependencyProperty.Register(nameof(BorderBrushFocused),
+                                                                                                           typeof(SolidColorBrush),
+                                                                                                           typeof(TextField),
+                                                                                                           new FrameworkPropertyMetadata(
+                                                                                                              defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
+                                                                                                              flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                                                              propertyChangedCallback: new PropertyChangedCallback(OnBorderBrushFocusedChanged)));
+
+        public SolidColorBrush BorderBrushFocused
+        {
+            get => (SolidColorBrush)GetValue(BorderBrushFocusedProperty);
+            set => SetValue(BorderBrushFocusedProperty, value);
+        }
+        private static void OnBorderBrushFocusedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
         #region Foreground
 
         public static new readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(nameof(Foreground),
@@ -239,12 +273,12 @@ namespace AdvancedXAML
         #region CaretBrush
 
         public static readonly DependencyProperty CaretBrushProperty = DependencyProperty.Register(nameof(CaretBrush),
-                                                                                                       typeof(SolidColorBrush),
-                                                                                                       typeof(TextField),
-                                                                                                       new FrameworkPropertyMetadata(
-                                                                                                          defaultValue: new SolidColorBrush(Color.FromArgb(255, 18, 18, 18)),
-                                                                                                          flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
-                                                                                                          propertyChangedCallback: new PropertyChangedCallback(OnCaretBrushChanged)));
+                                                                                                   typeof(SolidColorBrush),
+                                                                                                   typeof(TextField),
+                                                                                                   new FrameworkPropertyMetadata(
+                                                                                                      defaultValue: new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
+                                                                                                      flags: FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                                                                                      propertyChangedCallback: new PropertyChangedCallback(OnCaretBrushChanged)));
 
         public SolidColorBrush CaretBrush
         {
@@ -289,19 +323,17 @@ namespace AdvancedXAML
 
         private void TextChange(object sender, TextChangedEventArgs e)
         {
-            if (((TextBox)sender).IsFocused)
-                PlaceHolderVisibility = Visibility.Collapsed;
-            else
-                PlaceHolderVisibility = Text == "" ? Visibility.Visible : Visibility.Collapsed;
+            PlaceHolderVisibility = Text == "" ? Visibility.Visible : Visibility.Collapsed;
         }
-
         private void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            PlaceHolderVisibility = Visibility.Collapsed;
+            FocuseVisibility = Visibility.Visible;
         }
 
         private void TextBoxLostFocus(object sender, RoutedEventArgs e)
         {
+            FocuseVisibility = Visibility.Collapsed;
+
             PlaceHolderVisibility = Text == "" ? Visibility.Visible : Visibility.Collapsed;
         }
     }

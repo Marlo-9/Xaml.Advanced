@@ -7,11 +7,11 @@ using System.Windows;
 // Общие сведения об этой сборке предоставляются следующим набором
 // атрибутов. Отредактируйте значения этих атрибутов, чтобы изменить
 // связанные с этой сборкой.
-[assembly: AssemblyTitle("AdvancedXAML")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Xaml.Advanced")]
+[assembly: AssemblyDescription("Библотека содержащая более гибкие элементы Xaml.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AdvancedXAML")]
+[assembly: AssemblyCompany("Marlo_9")]
+[assembly: AssemblyProduct("Xaml.Advanced")]
 [assembly: AssemblyCopyright("Marlo_9 Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -51,5 +51,6 @@ using System.Windows;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.0.1.0")]
+[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: NeutralResourcesLanguage("ru-RU")]

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdvancedXAML.Properties {
+namespace Xaml.Advanced.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
