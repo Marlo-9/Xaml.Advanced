@@ -10,7 +10,7 @@ Contains two elements TextField, PasswordField.
 For the most part, it does not differ from the standard xaml TextBox element, it also supports binding for most of its properties.
 Its main difference is the presence of the properties cornerRadius, BorderBrushFocused and PlaceHolder.
 
-- cornerRadius - property responsible for rounding corners.
+- CornerRadius - property responsible for rounding corners.
 - PlaceHolder - property responsible for what text will be displayed while the Text property is empty.
 - BorderBrushFocused - property responsible for what color BorderBrush will be when the element has focus.
 
@@ -21,7 +21,7 @@ Its main difference is the presence of the properties cornerRadius, PlaceHolder,
 
 The first mode, standard for PasswordBox when all characters are replaced with "●". The second is when the password is fully visible.
 
-- cornerRadius - property responsible for rounding corners.
+- CornerRadius - property responsible for rounding corners.
 - PlaceHolder - property responsible for what text will be displayed while the Text property is empty.
 - BorderBrushFocused - property responsible for what color BorderBrush will be when the element has focus.
 - IsButtonEnable - property responsible for whether the user will have access to the button to change the password display mode.
